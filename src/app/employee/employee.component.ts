@@ -21,7 +21,7 @@ export class EmployeeComponent implements OnInit {
   ngOnInit() {
     this.employeeForm = this.formbulider.group({
       EmpName: ['', [Validators.required]],
-      DateOfBirth: ['', [Validators.required]],
+      //DateOfBirth: ['', [Validators.required]],
       EmailId: ['', [Validators.required]],
       Gender: ['', [Validators.required]],
       Address: ['', [Validators.required]],
@@ -39,21 +39,22 @@ export class EmployeeComponent implements OnInit {
     this.CreateEmployee(employee);
     this.employeeForm.reset();
   }
-  loadEmployeeToEdit(employeeId: string) {
+  loadEmployeeToEdit(employeeId: string) 
+  {
     this.employeeService.getEmployeeById(employeeId).subscribe(employee => {
       this.massage = null;
       this.dataSaved = false;
       this.employeeIdUpdate = employee.EmpId;
       this.employeeForm.controls['EmpId'].setValue(employee.EmpId);
       this.employeeForm.controls['EmpName'].setValue(employee.EmpName);
-      this.employeeForm.controls['DateOfBirth'].setValue(employee.DateOfBirth);
+     //this.employeeForm.controls['DateOfBirth'].setValue(employee.DateOfBirth);
       this.employeeForm.controls['EmailId'].setValue(employee.EmailId);
       this.employeeForm.controls['Gender'].setValue(employee.Gender);
       this.employeeForm.controls['Address'].setValue(employee.Address);
       this.employeeForm.controls['PinCode'].setValue(employee.PinCode);
     });
-
   }
+
   CreateEmployee(employee: Employee) {
     if (this.employeeIdUpdate == null) {
       this.employeeService.createEmployee(employee).subscribe(
@@ -76,22 +77,22 @@ export class EmployeeComponent implements OnInit {
       });
     }
   }
- 
-  deleteEmployee(employeeId: string) {
-    if (confirm("Are you sure you want to delete this id ?"+employeeId)) {  
-      
-    this.employeeService.deleteEmployeeById(employeeId).subscribe(() => {
-     
-      console.log(this.employeeForm);
-      this.dataSaved = true;
-      this.massage = 'Record Deleted Succefully';
-      this.loadAllEmployees();
-      this.employeeIdUpdate = null;
-      this.employeeForm.reset();
 
-    });
+  deleteEmployee(employeeId: string) {
+    if (confirm("Are you sure you want to delete this id ?" + employeeId)) {
+
+      this.employeeService.deleteEmployeeById(employeeId).subscribe(() => {
+
+        console.log(this.employeeForm);
+        this.dataSaved = true;
+        this.massage = 'Record Deleted Succefully';
+        this.loadAllEmployees();
+        this.employeeIdUpdate = null;
+        this.employeeForm.reset();
+
+      });
+    }
   }
-}
   resetForm() {
     this.employeeForm.reset();
     this.massage = null;

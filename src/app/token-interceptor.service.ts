@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpInterceptor,  HttpHeaders } from '@angular/common/http'
+import { HttpInterceptor,  HttpHeaders, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http'
 import { AuthService } from './auth.service';
 import { UserService } from './user/user.service';
 import { Observable } from 'rxjs';
@@ -11,22 +11,19 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   constructor(private injector: Injector){}
 
-  intercept(req, next) {
-    let authService = this.injector.get(UserService)
-    let tokenizedReq = req.clone(
-      {
-        SetHeaders:
-        {
-          Authorization:`${authService.loggedIn()}`
-        }
-       // headers: req.headers.set("Authorization",authService.loggedIn()
-         //)
-        //  headers:new HttpHeaders({
-        //   'Authorization': 'my-auth-token'
-        //  })
-      }
-    )
-    return next.handle(tokenizedReq)
+ intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  const token = localStorage.token; 
+  const name = localStorage.username;
+console.log(token);
+console.log(name);
+  if (!token) {
+    return next.handle(req);
   }
 
+  const req1 = req.clone
+  ({
+    headers: req.headers.set('Authorization', `${token}`)
+  });
+  return next.handle(req1);
+}
 }

@@ -22,7 +22,7 @@
                     <span *ngIf="!employeeForm.get('EmpName').value && employeeForm.get('EmpName').touched"></span>
                   </mat-error>
                 </td>
-                <td class="tbl1">
+                <!-- <td class="tbl1">
                   <mat-form-field class="demo-full-width">
                     <input matInput [matDatepicker]="picker" matTooltip="Enter Date Of Birth" formControlName="DateOfBirth" placeholder="Choose Date Of Birth">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -31,7 +31,7 @@
                   <mat-error>
                     <span *ngIf="!employeeForm.get('DateOfBirth').value && employeeForm.get('DateOfBirth').touched"></span>
                   </mat-error>
-                </td>
+                </td> -->
                 <td class="tbl1">
                   <mat-form-field class="demo-full-width">
                     <input formControlName="EmailId" matTooltip="Enter EmailId" matInput placeholder="EmailId">
@@ -74,9 +74,10 @@
               <tr>
                 <td></td>
                 <td  class="content-center">
-                  <button type="submit" mat-raised-button color="accent" matTooltip="Click Submit Button" [disabled]="!employeeForm.valid">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button type="submit" mat-raised-button color="accent" matTooltip="Click Submit Button" >Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
                   <button type="reset" mat-raised-button color="accent" matTooltip="Click Reset Button" (click)="resetForm()">Reset</button>
                 </td>
+                <!-- [disabled]="!employeeForm.valid" -->
                 <td>
                   <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">
                     {{massage}}
@@ -121,3 +122,4 @@
 </mat-card>
 
 </div>
+

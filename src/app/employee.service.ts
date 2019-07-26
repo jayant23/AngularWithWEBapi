@@ -15,24 +15,25 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.url + 'GetallEmployees');
   }
 
-  getEmployeeById(employeeId: string): Observable<Employee> {
-    return this.http.get<Employee>(this.url + '/GetEmaployeeById/' + employeeId);
+  getEmployeeById(id: string): Observable<Employee> {
+    return this.http.post<Employee>(this.url + 'GetEmployeeById/', id);
   }
+
   createEmployee(employee: Employee): Observable<Employee> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     console.log(employee);
-    return this.http.post<Employee>(this.url + '/PostEmaployee', employee);
+    return this.http.post<Employee>(this.url + 'AddEmployee',employee);
   }
   
   updateEmployee(employee: Employee): Observable<Employee> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.put<Employee>(this.url + '/UpdateEmployeeDetails', employee, httpOptions);
+    return this.http.put<Employee>(this.url + 'UpdateEmployee', employee);
   }
 
   deleteEmployeeById(employeeid: string): Observable<number> {
     console.log()
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.delete<number>(this.url + '/DeleteEmaployeeDelete?id='+ employeeid, httpOptions);
+    //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.post<number>(this.url + 'DeleteEmaployee?id=',employeeid);
   }
 
 }
