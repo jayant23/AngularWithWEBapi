@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from './employee';
+import { stringify } from '@angular/core/src/render3/util';
 
 
 @Injectable({
@@ -15,8 +16,9 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.url + 'GetallEmployees');
   }
 
-  getEmployeeById(id: string): Observable<Employee> {
-    return this.http.post<Employee>(this.url + 'GetEmployeeById/', id);
+  getEmployeeById(employeeid: string): Observable<Employee> {
+    const id = String
+    return this.http.post<Employee>(this.url + 'GetEmployeeById',JSON.stringify({"id":employeeid}) );
   }
 
   createEmployee(employee: Employee): Observable<Employee> {

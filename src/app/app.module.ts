@@ -18,6 +18,8 @@ import { UserLoginComponent } from './user/user-login/user-login.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import {TokenInterceptorService} from './token-interceptor.service'
+import {NgxPaginationModule} from 'ngx-pagination';
+
 const ROUTES: Route[] = [
  // { path: '', component: UserLoginComponent},
 { path: 'employee', component: EmployeeComponent},
@@ -32,6 +34,7 @@ const ROUTES: Route[] = [
     UserLoginComponent
   ],
   imports: [
+    NgxPaginationModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

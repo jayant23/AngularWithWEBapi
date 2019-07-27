@@ -9,14 +9,24 @@ import { Employee } from '../employee';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
+
 export class EmployeeComponent implements OnInit {
+  config: any;
+  collection = { count: 60, data: [] }
   dataSaved = false;
   employeeForm: any;
   allEmployees: Observable<Employee[]>;
   employeeIdUpdate = null;
   massage = null;
+  id:string;
+  constructor(private formbulider: FormBuilder, private employeeService: EmployeeService) { 
+    this.config = {
+      itemsPerPage: 5,
+      currentPage: 1,
+      totalItems: this.collection.count
+    };
 
-  constructor(private formbulider: FormBuilder, private employeeService: EmployeeService) { }
+  }
 
   ngOnInit() {
     this.employeeForm = this.formbulider.group({
@@ -29,18 +39,26 @@ export class EmployeeComponent implements OnInit {
     });
     this.loadAllEmployees();
   }
+ 
+    pageChanged(event){
+    this.config.currentPage = event;
+  }
+
   loadAllEmployees() {
     this.allEmployees = this.employeeService.getAllEmployee();
     console.log(this.allEmployees);
   }
+
   onFormSubmit() {
     this.dataSaved = false;
     const employee = this.employeeForm.value;
     this.CreateEmployee(employee);
     this.employeeForm.reset();
   }
+
   loadEmployeeToEdit(employeeId: string) 
   {
+    // const employeeid = {"id":employeeId}
     this.employeeService.getEmployeeById(employeeId).subscribe(employee => {
       this.massage = null;
       this.dataSaved = false;
@@ -82,14 +100,12 @@ export class EmployeeComponent implements OnInit {
     if (confirm("Are you sure you want to delete this id ?" + employeeId)) {
 
       this.employeeService.deleteEmployeeById(employeeId).subscribe(() => {
-
         console.log(this.employeeForm);
         this.dataSaved = true;
         this.massage = 'Record Deleted Succefully';
         this.loadAllEmployees();
         this.employeeIdUpdate = null;
         this.employeeForm.reset();
-
       });
     }
   }
